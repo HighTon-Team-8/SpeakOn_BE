@@ -1,7 +1,7 @@
 package com.example.team8be.domain.material.presentation;
 
 import com.example.team8be.domain.material.domain.Material;
-import com.example.team8be.domain.material.presentation.dto.MaterialRequest;
+import com.example.team8be.domain.material.presentation.dto.request.MaterialRequest;
 import com.example.team8be.domain.material.service.UploadMaterialService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

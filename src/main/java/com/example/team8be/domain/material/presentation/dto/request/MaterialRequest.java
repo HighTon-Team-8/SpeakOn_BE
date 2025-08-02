@@ -1,4 +1,4 @@
-package com.example.team8be.domain.material.presentation.dto;
+package com.example.team8be.domain.material.presentation.dto.request;
 
 import lombok.Getter;
 
