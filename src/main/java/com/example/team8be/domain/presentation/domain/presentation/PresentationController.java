@@ -1,6 +1,7 @@
 package com.example.team8be.domain.presentation.domain.presentation;
 
 import com.example.team8be.domain.presentation.domain.Presentation;
+import com.example.team8be.domain.presentation.domain.presentation.dto.PresentationListResponse;
 import com.example.team8be.domain.presentation.domain.presentation.dto.PresentationResponse;
 import com.example.team8be.domain.presentation.service.QueryAllPresentationService;
 import com.example.team8be.domain.presentation.service.QueryPresentationService;
@@ -34,7 +35,7 @@ public class PresentationController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<PresentationResponse> queryAllPresentation() {
+    public List<PresentationListResponse> queryAllPresentation() {
         return queryAllPresentationService.execute();
     }
 }

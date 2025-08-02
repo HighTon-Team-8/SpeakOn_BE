@@ -1,7 +1,7 @@
 package com.example.team8be.domain.material.service;
 
 import com.example.team8be.domain.material.domain.repository.MaterialRepository;
-import com.example.team8be.domain.material.presentation.dto.response.MaterialResponse;
+import com.example.team8be.domain.material.presentation.dto.response.MaterialListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +14,10 @@ public class QueryAllMaterialService {
     private final MaterialRepository materialRepository;
 
     @Transactional(readOnly = true)
-    public List<MaterialResponse> execute() {
+    public List<MaterialListResponse> execute() {
         return materialRepository.findAll()
                 .stream()
-                .map(MaterialResponse::new)
+                .map(MaterialListResponse::new)
                 .toList();
     }
 }

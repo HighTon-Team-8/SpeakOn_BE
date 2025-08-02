@@ -2,6 +2,7 @@ package com.example.team8be.domain.material.presentation;
 
 import com.example.team8be.domain.material.domain.Material;
 import com.example.team8be.domain.material.presentation.dto.request.MaterialRequest;
+import com.example.team8be.domain.material.presentation.dto.response.MaterialListResponse;
 import com.example.team8be.domain.material.presentation.dto.response.MaterialResponse;
 import com.example.team8be.domain.material.service.QueryAllMaterialService;
 import com.example.team8be.domain.material.service.QueryMaterialService;
@@ -37,7 +38,7 @@ public class MaterialController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<MaterialResponse> queryAllMaterial() {
+    public List<MaterialListResponse> queryAllMaterial() {
         return queryAllMaterialService.execute();
     }
 }

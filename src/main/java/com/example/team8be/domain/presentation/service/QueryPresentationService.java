@@ -17,7 +17,6 @@ public class QueryPresentationService {
                 .orElseThrow(() -> PresentationNotFoundException.EXCEPTION);
 
         return PresentationResponse.builder()
-                .file_url(presentation.getFile_url())
                 .summary(presentation.getSummary())
                 .deliveryScore(presentation.getDeliveryScore())
                 .feedback(presentation.getFeedback())

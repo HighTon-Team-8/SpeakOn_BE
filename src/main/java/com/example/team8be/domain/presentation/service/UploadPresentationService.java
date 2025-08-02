@@ -35,7 +35,7 @@ public class UploadPresentationService {
             String feedback = (String) analysis.get("feedback");
 
             return presentationRepository.save(Presentation.builder()
-                    .file_url(tempFile.getAbsolutePath())
+                    .fileUrl(tempFile.getAbsolutePath())
                     .summary(summary)
                     .deliveryScore(deliveryScore)
                     .feedback(feedback)
