@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MaterialRepository extends CrudRepository<Material, Long> {
+public interface MaterialRepository extends JpaRepository<Material, Long> {
 }
