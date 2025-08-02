@@ -1,4 +1,4 @@
-package com.example.team8be.domain.presentation.service;
+package com.example.team8be.infrastructure.openai.service;
 
 import lombok.RequiredArgsConstructor;
 import okhttp3.*;
