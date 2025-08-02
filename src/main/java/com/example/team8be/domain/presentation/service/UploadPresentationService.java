@@ -28,14 +28,15 @@ public class UploadPresentationService {
             // Whisper STT → transcript 생성
             String transcript = whisperService.transcribeAudio(tempFile);
 
-            // GPT 분석 → deliveryScore & feedback 생성
-            Map<String, Object> analysis = gptService.analyzePresentation(transcript);
+            // summary, deliveryScore & feedback 생성
+            Map<String, Object> analysis = gptService.analyzePresentationFull(transcript);
+            String summary = (String) analysis.get("summary");
             int deliveryScore = (int) analysis.get("deliveryScore");
             String feedback = (String) analysis.get("feedback");
 
             return presentationRepository.save(Presentation.builder()
                     .file_url(tempFile.getAbsolutePath())
-                    .transcript(transcript)
+                    .summary(summary)
                     .deliveryScore(deliveryScore)
                     .feedback(feedback)
                     .build());
