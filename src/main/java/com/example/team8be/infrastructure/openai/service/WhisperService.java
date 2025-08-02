@@ -1,6 +1,8 @@
 package com.example.team8be.infrastructure.openai.service;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -14,19 +16,24 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.nio.file.Files;
+import java.util.Objects;
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class WhisperService {
 
-    @Value("${openai.api.key}")
-    private String openaiApiKey;
+    @Value("${chatgpt.api-key}")
+    private String apiKey;
+
+    private final OkHttpClient client = new OkHttpClient();
 
     public String transcribeAudio(File audioFile) throws IOException {
-        OkHttpClient client = new OkHttpClient();
+        // 확장자에 따른 MIME Type 결정
+        String mimeType = Files.probeContentType(audioFile.toPath());
+        if (mimeType == null) mimeType = "audio/mpeg"; // fallback
 
-        MediaType mediaType = MediaType.get("audio/mpeg");
-        RequestBody fileBody = RequestBody.create(mediaType, audioFile);
+        RequestBody fileBody = RequestBody.create(audioFile, MediaType.get(mimeType));
 
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -37,15 +44,18 @@ public class WhisperService {
         Request request = new Request.Builder()
                 .url("https://api.openai.com/v1/audio/transcriptions")
                 .post(requestBody)
-                .addHeader("Authorization", "Bearer " + openaiApiKey)
+                .addHeader("Authorization", "Bearer " + apiKey)
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
+            String raw = response.body() != null ? response.body().string() : "";
             if (!response.isSuccessful()) {
-                throw new IOException("STT 실패: " + response);
+                throw new IOException("STT 실패: " + raw);
             }
-            String result = response.body().string();
-            return new JSONObject(result).getString("text");
+
+            String text = new JSONObject(raw).getString("text");
+            return text;
         }
     }
+
 }
