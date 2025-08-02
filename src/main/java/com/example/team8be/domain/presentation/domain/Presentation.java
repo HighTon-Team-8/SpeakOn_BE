@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Presentation extends BaseTimeIdEntity {
-    private String file_url;
+    private String fileUrl;
 
     private String summary;
 
