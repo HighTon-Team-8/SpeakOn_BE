@@ -42,8 +42,6 @@ chatgpt:
   temperature: 0.7
   maxTokens: 4096
 
-
-
 redis:
-  host: localhost
+  host: ${host}
   port: 6379
