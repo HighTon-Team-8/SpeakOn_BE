@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -31,39 +32,39 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    //    @Bean
-//    protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
-//
-//        HttpSecurity with = httpSecurity
-//                .csrf(AbstractHttpConfigurer::disable)
-//
-//                .cors(cors -> cors
-//                        .configurationSource(corsConfigurationSource())
-//                )
-//
-//                .headers(headers -> {
-//                            headers
-//                                    .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin
-//                                    );
-//                        }
-//                )
-//
-//                .sessionManagement(sessionManagement -> sessionManagement
-//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                )
-//
-//                .authorizeHttpRequests(authorize -> authorize
-//
-//                        .requestMatchers( "/user/**", "/auth/**", "/problem/**")
-//                        .permitAll()
-//                )
-//
-//                .with(new FilterConfig(jwtTokenProvider, objectMapper), Customizer.withDefaults());
-//
-//        return httpSecurity.build();
-//
-//    }
-//
+        @Bean
+    protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
+
+        HttpSecurity with = httpSecurity
+                .csrf(AbstractHttpConfigurer::disable)
+
+                .cors(cors -> cors
+                        .configurationSource(corsConfigurationSource())
+                )
+
+                .headers(headers -> {
+                            headers
+                                    .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin
+                                    );
+                        }
+                )
+
+                .sessionManagement(sessionManagement -> sessionManagement
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+
+                .authorizeHttpRequests(authorize -> authorize
+
+                        .requestMatchers( "/user/**", "/auth/**", "/presentation/**")
+                        .permitAll()
+                )
+
+                .with(new FilterConfig(jwtTokenProvider, objectMapper), Customizer.withDefaults());
+
+        return httpSecurity.build();
+
+    }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -78,18 +79,5 @@ public class SecurityConfig {
         return source;
     }
 
-    @Bean
-    protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll()
-                );
 
-        return httpSecurity.build();
-
-    }
 }
