@@ -17,17 +17,18 @@ public class GPTService {
     @Value("${openai.api.key}")
     private String openaiApiKey;
 
-    public Map<String, Object> analyzePresentation(String transcript) throws IOException {
+    public Map<String, Object> analyzePresentationFull(String transcript) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
         JSONObject message = new JSONObject();
         message.put("role", "user");
         message.put("content",
-                "당신은 발표 전문가입니다. 다음 발표 대본을 평가하고 JSON 형식으로 결과를 반환하세요.\n\n" +
+                "당신은 발표 전문가입니다. 다음 발표 대본을 분석하여 JSON으로 반환하세요.\n\n" +
                         "대본:\n\"" + transcript + "\"\n\n" +
                         "JSON 형식:\n{\n" +
-                        "  \"deliveryScore\": 0~100 사이 정수,\n" +
-                        "  \"feedback\": \"발표에 대한 자세한 피드백\"\n" +
+                        "  \"summary\": \"자세한 발표 요약\",\n" +
+                        "  \"deliveryScore\": 1~5 사이 정수,\n" +
+                        "  \"feedback\": \"발표에 대한 구체적 피드백\"\n" +
                         "}");
 
         JSONObject requestJson = new JSONObject();
@@ -46,7 +47,7 @@ public class GPTService {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("GPT request failed");
+            if (!response.isSuccessful()) throw new IOException("GPT 요청 실패");
 
             String result = response.body().string();
             JSONObject choice = new JSONObject(result)
@@ -59,6 +60,7 @@ public class GPTService {
             // GPT가 준 JSON 문자열 파싱
             JSONObject json = new JSONObject(content);
             Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("summary", json.getString("summary"));
             resultMap.put("deliveryScore", json.getInt("deliveryScore"));
             resultMap.put("feedback", json.getString("feedback"));
 
