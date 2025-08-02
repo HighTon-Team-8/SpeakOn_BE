@@ -7,20 +7,23 @@ import com.example.team8be.domain.script.domain.Script;
 import com.example.team8be.domain.script.domain.repository.ScriptRepository;
 import com.example.team8be.infrastructure.openai.service.MaterialGPTService;
 import lombok.RequiredArgsConstructor;
-import org.apache.tika.exception.TikaException;
-import org.apache.tika.metadata.Metadata;
-import org.apache.tika.parser.AutoDetectParser;
-import org.apache.tika.parser.ParseContext;
-import org.apache.tika.sax.BodyContentHandler;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.poi.xslf.usermodel.XMLSlideShow;
+import org.apache.poi.xslf.usermodel.XSLFShape;
+import org.apache.poi.xslf.usermodel.XSLFSlide;
+import org.apache.poi.xslf.usermodel.XSLFTextShape;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UploadMaterialService {
@@ -33,50 +36,85 @@ public class UploadMaterialService {
         try {
             String originalName = file.getOriginalFilename();
             String extension = originalName.substring(originalName.lastIndexOf(".")).toLowerCase();
-            if (!extension.equals(".pdf") && !extension.equals(".pptx")) {
-                throw new IllegalArgumentException("지원하지 않는 파일 형식입니다: " + extension);
-            }
-
             File tempFile = File.createTempFile("material-", extension);
             file.transferTo(tempFile);
 
-            Material material = Material.builder()
+            Material material = materialRepository.save(Material.builder()
                     .title(request.getTitle())
                     .fileUrl(tempFile.getAbsolutePath())
-                    .build();
-            materialRepository.save(material);
+                    .build());
 
-            String content = extractText(tempFile);
+            List<String> slides = extractSlides(tempFile);
+            int slideNum = 1;
 
-            //GPT → 슬라이드별 대본 생성
-            List<String> slideScripts = gptService.generateSlideScript(content);
+            for (String slide : slides) {
+                if (slide.isBlank()) continue;
 
-            int slideNumber = 1;
-            for (String scriptText : slideScripts) {
-                Script script = Script.builder()
-                        .material(material)
-                        .slideNumber(slideNumber++)
-                        .slideText(scriptText)
-                        .build();
-                scriptRepository.save(script);
+                try {
+                    String scriptText = gptService.generateSlideScript(slide);
+
+                    scriptRepository.save(Script.builder()
+                            .material(material)
+                            .slideNumber(slideNum++)
+                            .slideText(scriptText)
+                            .build());
+
+                } catch (IOException e) {
+                    log.error("GPT 처리 중 오류 발생 - Material ID: {}, Slide {}",
+                            material.getId(), slideNum, e);
+                    slideNum++;
+                }
             }
 
             return material;
         } catch (IOException e) {
+            log.error("발표자료 처리 중 전체 오류 발생", e);
             throw new RuntimeException("발표자료 처리 중 오류 발생", e);
         }
     }
 
-    private String extractText(File file) throws IOException {
-        try (FileInputStream fis = new FileInputStream(file)) {
-            AutoDetectParser parser = new AutoDetectParser();
-            BodyContentHandler handler = new BodyContentHandler(-1); // 길이 제한 없음
-            Metadata metadata = new Metadata();
-            parser.parse(fis, handler, metadata, new ParseContext());
-            return handler.toString();
-        } catch (TikaException | SAXException e) {
-            throw new IOException("파일 파싱 실패", e);
+    private List<String> extractSlides(File file) throws IOException {
+        String name = file.getName().toLowerCase();
+        if (name.endsWith(".pptx")) {
+            return extractSlidesFromPptx(file);
+        } else if (name.endsWith(".pdf")) {
+            return extractSlidesFromPdf(file);
+        } else {
+            throw new IllegalArgumentException("지원하지 않는 파일 형식: " + name);
         }
+    }
+
+    private List<String> extractSlidesFromPptx(File file) throws IOException {
+        List<String> slides = new ArrayList<>();
+        try (FileInputStream fis = new FileInputStream(file);
+             XMLSlideShow ppt = new XMLSlideShow(fis)) {
+
+            for (XSLFSlide slide : ppt.getSlides()) {
+                StringBuilder sb = new StringBuilder();
+                for (XSLFShape shape : slide.getShapes()) {
+                    if (shape instanceof XSLFTextShape textShape) {
+                        sb.append(textShape.getText()).append("\n");
+                    }
+                }
+                slides.add(sb.toString().trim());
+            }
+        }
+        return slides;
+    }
+
+    private List<String> extractSlidesFromPdf(File file) throws IOException {
+        List<String> slides = new ArrayList<>();
+        try (PDDocument document = PDDocument.load(file)) {
+            PDFTextStripper stripper = new PDFTextStripper();
+            int pageCount = document.getNumberOfPages();
+            for (int i = 1; i <= pageCount; i++) {
+                stripper.setStartPage(i);
+                stripper.setEndPage(i);
+                String text = stripper.getText(document).trim();
+                slides.add(text);
+            }
+        }
+        return slides;
     }
 
 
