@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ScriptRepository extends CrudRepository<Script, Long> {
+public interface ScriptRepository extends JpaRepository<Script, Long> {
     List<Script> findByMaterialIdOrderBySlideNumberAsc(Long materialId);
 }
