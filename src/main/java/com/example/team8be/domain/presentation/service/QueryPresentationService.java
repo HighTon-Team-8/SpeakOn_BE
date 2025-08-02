@@ -18,7 +18,7 @@ public class QueryPresentationService {
 
         return PresentationResponse.builder()
                 .file_url(presentation.getFile_url())
-                .transcript(presentation.getTranscript())
+                .summary(presentation.getSummary())
                 .deliveryScore(presentation.getDeliveryScore())
                 .feedback(presentation.getFeedback())
                 .build();
