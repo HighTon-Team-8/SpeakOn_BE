@@ -26,11 +26,9 @@ public enum ErrorCode {
     FAILED_UPLOAD(1001, "업로드 실패"),
     FAILED_DELETE(1002, "삭제 실패"),
 
-    //problem
-    PROBLEM_NOT_FOUND(404, "Problem Not Found"),
 
-    //completion
-    COMPLETION_NOT_FOUND(404, "Completion Not Found"),
+    //presentation
+    PRESENTATION_NOT_FOUND(404, "PRENTATION NOT FOUND"),
 
     // general
     BAD_REQUEST(400, "프론트 탓"),
