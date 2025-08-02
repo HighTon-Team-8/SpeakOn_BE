@@ -8,28 +8,36 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class MaterialGPTService {
-    @Value("${openai.api.key}")
-    private String openaiApiKey;
+    @Value("${chatgpt.api-key}")
+    private String apiKey;
 
-    public List<String> generateSlideScript(String documentText) throws IOException {
+    @Value("${chatgpt.model}")
+    private String model;
+
+    @Value("${chatgpt.temperature}")
+    private double temperature;
+
+    @Value("${chatgpt.maxTokens}")
+    private int maxTokens;
+
+    public String generateSlideScript(String slideText) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
         JSONObject message = new JSONObject();
         message.put("role", "user");
         message.put("content",
-                "다음 발표 자료를 기반으로 슬라이드별 발표 대본을 작성해 주세요.\n" +
-                        "각 슬라이드는 2~3문장으로 요약한 발표 대본으로 작성하고, JSON 배열로만 출력해 주세요.\n\n"
-                        + documentText
+                "다음 슬라이드 내용을 2~3문장으로 요약하여 발표자가 읽을 대본으로 만들어 주세요.\n" +
+                        "대본만 반환하세요.\n\n" + slideText
         );
 
         JSONObject requestJson = new JSONObject();
-        requestJson.put("model", "gpt-4o-mini");
+        requestJson.put("model", model);
+        requestJson.put("temperature", temperature);
+        requestJson.put("max_tokens", maxTokens);
         requestJson.put("messages", new JSONArray().put(message));
 
         RequestBody body = RequestBody.create(
@@ -40,27 +48,24 @@ public class MaterialGPTService {
         Request request = new Request.Builder()
                 .url("https://api.openai.com/v1/chat/completions")
                 .post(body)
-                .addHeader("Authorization", "Bearer " + openaiApiKey)
+                .addHeader("Authorization", "Bearer " + apiKey)
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("GPT 요청 실패");
+            String rawResponse = response.body().string();
+            if (!response.isSuccessful()) {
+                System.err.println("GPT 요청 실패 - 코드: " + response.code() + ", 응답: " + rawResponse);
+                throw new IOException("GPT 요청 실패");
+            }
 
-            String result = response.body().string();
-            String content = new JSONObject(result)
+            String content = new JSONObject(rawResponse)
                     .getJSONArray("choices")
                     .getJSONObject(0)
                     .getJSONObject("message")
                     .getString("content")
                     .trim();
 
-            // JSON 배열 파싱
-            JSONArray array = new JSONArray(content);
-            List<String> slides = new ArrayList<>();
-            for (int i = 0; i < array.length(); i++) {
-                slides.add(array.getString(i));
-            }
-            return slides;
+            return content;
         }
     }
 
