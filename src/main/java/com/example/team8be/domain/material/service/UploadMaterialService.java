@@ -2,7 +2,7 @@ package com.example.team8be.domain.material.service;
 
 import com.example.team8be.domain.material.domain.Material;
 import com.example.team8be.domain.material.domain.repository.MaterialRepository;
-import com.example.team8be.domain.material.presentation.dto.MaterialRequest;
+import com.example.team8be.domain.material.presentation.dto.request.MaterialRequest;
 import com.example.team8be.domain.script.domain.Script;
 import com.example.team8be.domain.script.domain.repository.ScriptRepository;
 import com.example.team8be.infrastructure.openai.service.MaterialGPTService;
@@ -54,6 +54,7 @@ public class UploadMaterialService {
             int slideNumber = 1;
             for (String scriptText : slideScripts) {
                 Script script = Script.builder()
+                        .material(material)
                         .slideNumber(slideNumber++)
                         .slideText(scriptText)
                         .build();
