@@ -1,8 +1,8 @@
-package com.example.firststep_server.domain.auth.service;
+package com.example.team8be.domain.auth.service;
 
-import com.example.firststep_server.domain.auth.presentation.dto.request.SignupRequest;
-import com.example.firststep_server.domain.user.domain.User;
-import com.example.firststep_server.domain.user.domain.repository.UserRepository;
+import com.example.team8be.domain.auth.presentation.dto.request.SignupRequest;
+import com.example.team8be.domain.user.domain.User;
+import com.example.team8be.domain.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ public class SignupService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void signup(SignupRequest request) {
+    public void execute(SignupRequest request) {
         userRepository.save(User.builder()
                 .userName(request.getUserName())
                 .accountId(request.getAccountId())

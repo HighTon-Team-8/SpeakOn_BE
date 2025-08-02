@@ -1,6 +1,6 @@
-package com.example.firststep_server.global.config;
+package com.example.team8be.global.config;
 
-import com.example.firststep_server.global.security.jwt.JwtProperties;
+import com.example.team8be.global.security.jwt.JwtProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 

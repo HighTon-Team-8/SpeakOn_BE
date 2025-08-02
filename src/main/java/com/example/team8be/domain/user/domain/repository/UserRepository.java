@@ -1,6 +1,6 @@
-package com.example.firststep_server.domain.user.domain.repository;
+package com.example.team8be.domain.user.domain.repository;
 
-import com.example.firststep_server.domain.user.domain.User;
+import com.example.team8be.domain.user.domain.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,14 +1,14 @@
-package com.example.firststep_server.global.security.jwt;
+package com.example.team8be.global.security.jwt;
 
-import com.example.firststep_server.domain.auth.domain.RefreshToken;
-import com.example.firststep_server.domain.auth.domain.repository.RefreshTokenRepository;
-import com.example.firststep_server.domain.auth.exception.ExpiredTokenException;
-import com.example.firststep_server.domain.auth.exception.InvalidTokenException;
-import com.example.firststep_server.domain.auth.presentation.dto.response.TokenResponse;
-import com.example.firststep_server.domain.user.domain.User;
-import com.example.firststep_server.domain.user.domain.repository.UserRepository;
-import com.example.firststep_server.domain.user.exception.UserNotFoundException;
-import com.example.firststep_server.global.security.auth.CustomUserDetailsService;
+import com.example.team8be.domain.auth.domain.RefreshToken;
+import com.example.team8be.domain.auth.domain.repository.RefreshTokenRepository;
+import com.example.team8be.domain.auth.exception.ExpiredTokenException;
+import com.example.team8be.domain.auth.exception.InvalidTokenException;
+import com.example.team8be.domain.auth.presentation.dto.response.TokenResponse;
+import com.example.team8be.domain.user.domain.User;
+import com.example.team8be.domain.user.domain.repository.UserRepository;
+import com.example.team8be.domain.user.exception.UserNotFoundException;
+import com.example.team8be.global.security.auth.CustomUserDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -40,7 +40,7 @@ public class JwtTokenProvider {
                 .setSubject(accountId) //토큰의 소유자
                 .claim("type", "access") //액세스 토큰임을 나타냄
                 .setIssuedAt(now) //토큰 발행 시간 정보
-                .setExpiration(new Date(now.getTime() + jwtProperties.getAccessExpiration() * 1000)) //토큰의 만료 시간 설정
+//                .setExpiration(new Date(now.getTime() + jwtProperties.getAccessExpiration() * 1000)) //토큰의 만료 시간 설정
                 .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecretKey()) //HS512 알고리즘, 비밀 키를 Jwtproperties에서 가져옴
                 .compact();
 

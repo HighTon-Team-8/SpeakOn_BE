@@ -1,11 +1,10 @@
-package com.example.firststep_server.global.config;
+package com.example.team8be.global.config;
 
-import com.example.firststep_server.global.security.jwt.JwtTokenProvider;
+import com.example.team8be.global.security.jwt.JwtTokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -87,10 +86,10 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll() // ✅ 모든 요청 허용
+                        .anyRequest().permitAll()
                 );
 
-        return httpSecurity.build(); // ✅ jwt 관련 필터도 제거함
+        return httpSecurity.build();
 
     }
 }

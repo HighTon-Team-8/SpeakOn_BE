@@ -1,4 +1,4 @@
-package com.example.firststep_server.domain.user.domain;
+package com.example.team8be.domain.user.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

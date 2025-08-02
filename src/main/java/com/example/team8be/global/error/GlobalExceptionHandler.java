@@ -1,7 +1,7 @@
-package com.example.firststep_server.global.error;
+package com.example.team8be.global.error;
 
-import com.example.firststep_server.global.error.exception.ErrorCode;
-import com.example.firststep_server.global.error.exception.TurkeyException;
+import com.example.team8be.global.error.exception.ErrorCode;
+import com.example.team8be.global.error.exception.Team8Exception;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,8 @@ public class GlobalExceptionHandler {
 
 
     //비즈니스 로직에서의 에러
-    @ExceptionHandler(TurkeyException.class)
-    public ResponseEntity<ErrorResponse> handClimException(TurkeyException e) {
+    @ExceptionHandler(Team8Exception.class)
+    public ResponseEntity<ErrorResponse> handClimException(Team8Exception e) {
 
         ErrorCode errorCode = e.getErrorCode();
         ErrorResponse response = ErrorResponse.of(errorCode, errorCode.getErrorMessage());

@@ -1,4 +1,4 @@
-package com.example.firststep_server.global.security.jwt;
+package com.example.team8be.global.security.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

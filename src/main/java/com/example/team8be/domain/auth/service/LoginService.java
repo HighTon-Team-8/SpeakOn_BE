@@ -1,12 +1,12 @@
-package com.example.firststep_server.domain.auth.service;
+package com.example.team8be.domain.auth.service;
 
-import com.example.firststep_server.domain.auth.exception.PasswordMismatchException;
-import com.example.firststep_server.domain.auth.presentation.dto.request.LoginRequest;
-import com.example.firststep_server.domain.auth.presentation.dto.response.TokenResponse;
-import com.example.firststep_server.domain.user.domain.User;
-import com.example.firststep_server.domain.user.domain.repository.UserRepository;
-import com.example.firststep_server.domain.user.exception.UserNotFoundException;
-import com.example.firststep_server.global.security.jwt.JwtTokenProvider;
+import com.example.team8be.domain.auth.exception.PasswordMismatchException;
+import com.example.team8be.domain.auth.presentation.dto.request.LoginRequest;
+import com.example.team8be.domain.auth.presentation.dto.response.TokenResponse;
+import com.example.team8be.domain.user.domain.User;
+import com.example.team8be.domain.user.domain.repository.UserRepository;
+import com.example.team8be.domain.user.exception.UserNotFoundException;
+import com.example.team8be.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class LoginService {
     private final UserRepository userRepository;
 
     @Transactional
-    public TokenResponse login(LoginRequest request) {
+    public TokenResponse execute(LoginRequest request) {
 
         User user = userRepository.findByAccountId(request.getAccountId())
                 .orElseThrow(()-> UserNotFoundException.EXCEPTION);

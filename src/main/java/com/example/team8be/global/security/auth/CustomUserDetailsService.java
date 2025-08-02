@@ -1,7 +1,7 @@
-package com.example.firststep_server.global.security.auth;
+package com.example.team8be.global.security.auth;
 
-import com.example.firststep_server.domain.user.domain.User;
-import com.example.firststep_server.domain.user.domain.repository.UserRepository;
+import com.example.team8be.domain.user.domain.User;
+import com.example.team8be.domain.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

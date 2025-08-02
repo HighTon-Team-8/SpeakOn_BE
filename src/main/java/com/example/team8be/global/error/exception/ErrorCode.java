@@ -1,4 +1,4 @@
-package com.example.firststep_server.global.error.exception;
+package com.example.team8be.global.error.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

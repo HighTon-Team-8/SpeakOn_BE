@@ -1,8 +1,8 @@
-package com.example.firststep_server.domain.user.service.facade;
+package com.example.team8be.domain.user.service.facade;
 
-import com.example.firststep_server.domain.user.domain.User;
-import com.example.firststep_server.domain.user.domain.repository.UserRepository;
-import com.example.firststep_server.domain.user.exception.UserNotFoundException;
+import com.example.team8be.domain.user.domain.User;
+import com.example.team8be.domain.user.domain.repository.UserRepository;
+import com.example.team8be.domain.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

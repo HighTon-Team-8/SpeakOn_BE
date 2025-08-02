@@ -1,4 +1,4 @@
-package com.example.firststep_server.domain.auth.domain;
+package com.example.team8be.domain.auth.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

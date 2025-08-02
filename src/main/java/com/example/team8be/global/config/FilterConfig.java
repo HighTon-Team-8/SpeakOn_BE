@@ -1,8 +1,8 @@
-package com.example.firststep_server.global.config;
+package com.example.team8be.global.config;
 
-import com.example.firststep_server.global.error.GlobalExceptionFilter;
-import com.example.firststep_server.global.security.jwt.JwtTokenFilter;
-import com.example.firststep_server.global.security.jwt.JwtTokenProvider;
+import com.example.team8be.global.error.GlobalExceptionFilter;
+import com.example.team8be.global.security.jwt.JwtTokenFilter;
+import com.example.team8be.global.security.jwt.JwtTokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;

@@ -1,6 +1,6 @@
-package com.example.firststep_server.global.security.auth;
+package com.example.team8be.global.security.auth;
 
-import com.example.firststep_server.domain.user.domain.User;
+import com.example.team8be.domain.user.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

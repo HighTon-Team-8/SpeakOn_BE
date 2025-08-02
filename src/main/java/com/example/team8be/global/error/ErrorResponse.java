@@ -1,6 +1,6 @@
-package com.example.firststep_server.global.error;
+package com.example.team8be.global.error;
 
-import com.example.firststep_server.global.error.exception.ErrorCode;
+import com.example.team8be.global.error.exception.ErrorCode;
 import lombok.*;
 
 import java.time.LocalDateTime;

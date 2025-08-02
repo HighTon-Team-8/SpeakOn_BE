@@ -1,4 +1,4 @@
-package com.example.firststep_server.domain.auth.presentation.dto.request;
+package com.example.team8be.domain.auth.presentation.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

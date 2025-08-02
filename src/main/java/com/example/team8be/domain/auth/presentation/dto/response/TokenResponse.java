@@ -1,4 +1,4 @@
-package com.example.firststep_server.domain.auth.presentation.dto.response;
+package com.example.team8be.domain.auth.presentation.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

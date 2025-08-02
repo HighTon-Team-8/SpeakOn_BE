@@ -1,7 +1,7 @@
-package com.example.firststep_server.global.error;
+package com.example.team8be.global.error;
 
-import com.example.firststep_server.global.error.exception.ErrorCode;
-import com.example.firststep_server.global.error.exception.TurkeyException;
+import com.example.team8be.global.error.exception.ErrorCode;
+import com.example.team8be.global.error.exception.Team8Exception;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ public class GlobalExceptionFilter extends OncePerRequestFilter {
 
         try {
             filterChain.doFilter(request,response);
-        } catch (TurkeyException e){
+        } catch (Team8Exception e){
             ErrorCode errorCode = e.getErrorCode();
             writerErrorResponse(response, errorCode.getStatusCode(), ErrorResponse.of(errorCode, errorCode.getErrorMessage()));
         } catch (Exception e){

@@ -1,6 +1,6 @@
-package com.example.firststep_server.domain.auth.domain.repository;
+package com.example.team8be.domain.auth.domain.repository;
 
-import com.example.firststep_server.domain.auth.domain.RefreshToken;
+import com.example.team8be.domain.auth.domain.RefreshToken;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

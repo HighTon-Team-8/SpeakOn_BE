@@ -1,10 +1,10 @@
-package com.example.firststep_server.domain.auth.exception;
+package com.example.team8be.domain.auth.exception;
 
-import com.example.firststep_server.global.error.exception.ErrorCode;
-import com.example.firststep_server.global.error.exception.TurkeyException;
+import com.example.team8be.global.error.exception.ErrorCode;
+import com.example.team8be.global.error.exception.Team8Exception;
 
-public class InvalidTokenException extends TurkeyException {
-    public static final TurkeyException EXCEPTION = new InvalidTokenException();
+public class InvalidTokenException extends Team8Exception {
+    public static final Team8Exception EXCEPTION = new InvalidTokenException();
 
     public InvalidTokenException() {
         super(ErrorCode.INVALID_TOKEN);
