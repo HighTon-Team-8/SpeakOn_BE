@@ -19,9 +19,14 @@ public class User {
     @Column(nullable = false)
     private String userName;
 
+    @Column(length = 50)
+    private String introduction;
+
     @Column(nullable = false)
     private String accountId;
 
     @Column(nullable = false)
     private String password;
+
+    private String profileImageUrl;
 }
