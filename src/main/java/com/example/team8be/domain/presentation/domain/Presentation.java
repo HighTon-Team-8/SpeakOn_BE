@@ -13,7 +13,7 @@ import lombok.*;
 public class Presentation extends BaseTimeIdEntity {
     private String file_url;
 
-    private String transcript;
+    private String summary;
 
     private int deliveryScore;
 
