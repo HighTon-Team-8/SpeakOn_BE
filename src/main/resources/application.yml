@@ -35,6 +35,10 @@ jwt:
     level:
       root: DEBUG
 
+openai:
+  api:
+    key: ${OPEN_API_SECRET_KEY}
+
 
 redis:
   host: localhost
