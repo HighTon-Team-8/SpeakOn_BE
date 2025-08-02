@@ -21,9 +21,9 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
     @Value("${redis.host}")
     private String host;
-    
+
     @Value("${redis.port}")
-    private Integer port;
+    private int port;
 
 
 
