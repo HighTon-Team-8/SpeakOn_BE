@@ -1,5 +1,6 @@
 package com.example.team8be.domain.presentation.domain.presentation.dto;
 
+import com.example.team8be.domain.presentation.domain.Presentation;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,4 +14,11 @@ public class PresentationResponse {
     private int deliveryScore;
 
     private String feedback;
+
+    public PresentationResponse(Presentation presentation) {
+        this.file_url = presentation.getFile_url();
+        this.transcript = presentation.getTranscript();
+        this.deliveryScore = presentation.getDeliveryScore();
+        this.feedback = presentation.getFeedback();
+    }
 }
