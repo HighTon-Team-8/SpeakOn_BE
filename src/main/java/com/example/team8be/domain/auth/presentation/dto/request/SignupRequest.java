@@ -14,4 +14,8 @@ public class SignupRequest {
 
     @NotBlank
     private String password;
+
+    private String introduction;
+
+    private String profileImageUrl;
 }

@@ -18,8 +18,10 @@ public class SignupService {
     public void execute(SignupRequest request) {
         userRepository.save(User.builder()
                 .userName(request.getUserName())
+                .introduction(request.getIntroduction())
                 .accountId(request.getAccountId())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .profileImageUrl(request.getProfileImageUrl())
                 .build());
     }
 }
