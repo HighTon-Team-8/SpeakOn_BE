@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 public class QueryPresentationService {
     private final PresentationRepository presentationRepository;
 
-    public PresentationResponse execute(Long presentationId) {
-        Presentation presentation = presentationRepository.findById(presentationId)
+    public PresentationResponse execute(Long id) {
+        Presentation presentation = presentationRepository.findById(id)
                 .orElseThrow(() -> PresentationNotFoundException.EXCEPTION);
 
         return PresentationResponse.builder()
