@@ -5,6 +5,8 @@ import com.example.team8be.domain.material.domain.repository.MaterialRepository;
 import com.example.team8be.domain.material.presentation.dto.request.MaterialRequest;
 import com.example.team8be.domain.script.domain.Script;
 import com.example.team8be.domain.script.domain.repository.ScriptRepository;
+import com.example.team8be.domain.user.domain.User;
+import com.example.team8be.domain.user.service.facade.UserFacade;
 import com.example.team8be.infrastructure.openai.service.MaterialGPTService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +33,11 @@ public class UploadMaterialService {
     private final MaterialGPTService gptService;
     private final MaterialRepository materialRepository;
     private final ScriptRepository scriptRepository;
+    private final UserFacade userFacade;
 
     public Material execute(MultipartFile file, MaterialRequest request) {
+        User user = userFacade.currentUser();
+
         try {
             String originalName = file.getOriginalFilename();
             String extension = originalName.substring(originalName.lastIndexOf(".")).toLowerCase();

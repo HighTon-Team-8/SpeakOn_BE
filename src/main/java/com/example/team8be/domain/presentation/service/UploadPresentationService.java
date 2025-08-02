@@ -2,6 +2,8 @@ package com.example.team8be.domain.presentation.service;
 
 import com.example.team8be.domain.presentation.domain.Presentation;
 import com.example.team8be.domain.presentation.domain.repository.PresentationRepository;
+import com.example.team8be.domain.user.domain.User;
+import com.example.team8be.domain.user.service.facade.UserFacade;
 import com.example.team8be.infrastructure.openai.service.PresentationGPTService;
 import com.example.team8be.infrastructure.openai.service.WhisperService;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +20,11 @@ public class UploadPresentationService {
     private final WhisperService whisperService;
     private final PresentationGPTService gptService;
     private final PresentationRepository presentationRepository;
+    private final UserFacade userFacade;
 
     public Presentation execute(MultipartFile file) {
+        User user = userFacade.currentUser();
+
         try {
             // 파일 임시 저장
             File tempFile = File.createTempFile("upload", ".wav");
