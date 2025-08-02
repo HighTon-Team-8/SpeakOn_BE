@@ -30,6 +30,9 @@ public enum ErrorCode {
     //presentation
     PRESENTATION_NOT_FOUND(404, "PRENTATION NOT FOUND"),
 
+    //material
+    MATERIAL_NOT_FOUND(404, "MATERIAL NOT FOUND"),
+
     // general
     BAD_REQUEST(400, "프론트 탓"),
     INTERNAL_SERVER_ERROR(500, "서버 탓");
