@@ -9,7 +9,7 @@ import lombok.Getter;
 public class PresentationResponse {
     private String file_url;
 
-    private String transcript;
+    private String summary;
 
     private int deliveryScore;
 
@@ -17,7 +17,7 @@ public class PresentationResponse {
 
     public PresentationResponse(Presentation presentation) {
         this.file_url = presentation.getFile_url();
-        this.transcript = presentation.getTranscript();
+        this.summary = presentation.getSummary();
         this.deliveryScore = presentation.getDeliveryScore();
         this.feedback = presentation.getFeedback();
     }
