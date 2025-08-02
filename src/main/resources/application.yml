@@ -43,5 +43,5 @@ chatgpt:
   maxTokens: 4096
 
 redis:
-  host: ${host}
+  host: ${REDIS_HOST}
   port: 6379
