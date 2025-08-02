@@ -2,7 +2,7 @@ package com.example.team8be.domain.presentation.service;
 
 import com.example.team8be.domain.presentation.domain.Presentation;
 import com.example.team8be.domain.presentation.domain.repository.PresentationRepository;
-import com.example.team8be.infrastructure.openai.service.GPTService;
+import com.example.team8be.infrastructure.openai.service.PresentationGPTService;
 import com.example.team8be.infrastructure.openai.service.WhisperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UploadPresentationService {
     private final WhisperService whisperService;
-    private final GPTService gptService;
+    private final PresentationGPTService gptService;
     private final PresentationRepository presentationRepository;
 
     public Presentation execute(MultipartFile file) {
