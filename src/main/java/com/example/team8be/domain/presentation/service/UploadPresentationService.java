@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class PresentationUploadService {
+public class UploadPresentationService {
     private final WhisperService whisperService;
     private final GPTService gptService;
     private final PresentationRepository presentationRepository;
@@ -20,7 +20,7 @@ public class PresentationUploadService {
     public Presentation execute(MultipartFile file) {
         try {
             // 파일 임시 저장
-            File tempFile = File.createTempFile("upload", ".mp3");
+            File tempFile = File.createTempFile("upload", ".wav");
             file.transferTo(tempFile);
 
             // Whisper STT → transcript 생성
