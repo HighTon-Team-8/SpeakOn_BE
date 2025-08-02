@@ -51,6 +51,10 @@ dependencies {
     implementation 'org.apache.tika:tika-core:2.9.1'
     implementation 'org.apache.tika:tika-parsers-standard-package:2.9.1'
 
+    implementation 'org.apache.poi:poi-ooxml:5.2.5'    // PPTX
+    implementation 'org.apache.pdfbox:pdfbox:2.0.30'   // PDF
+
+
 
 }
 
