@@ -41,6 +41,17 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'javax.xml.bind:jaxb-api:2.3.0'
 
+    // HTTP 클라이언트 (OpenAI API 호출)
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+
+    // JSON 파싱
+    implementation 'org.json:json:20240303'
+
+    // Apache Tika (PDF/PPTX 텍스트 추출)
+    implementation 'org.apache.tika:tika-core:2.9.1'
+    implementation 'org.apache.tika:tika-parsers-standard-package:2.9.1'
+
+
 }
 
 tasks.named('test') {
